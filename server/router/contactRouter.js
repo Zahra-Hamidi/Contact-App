@@ -2,12 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Contact = require('../model/contact');
-const data = require('../data')
 
-router.get('/',async(req,res)=>{
-    const contactCraeted = await Contact.insertMany(data.contacts);
-    res.send(contactCraeted);
-});
+
 
 router.post('/add',async(req,res)=>{
     const contact = new Contact({
@@ -19,20 +15,22 @@ router.post('/add',async(req,res)=>{
 });
 
 router.post('/edit/:id',async(req,res)=>{
-    let editContact =await Contact.findByIdAndUpdate(req.params.id,{
-                name:req.body.name,
-                email:req.body.email
+    let editContact =await Contact.updateOne({_id:req.params.id},{
+        name:req.body.name,
+        email:req.body.email
+    }).then((contact)=>{
+            res.send(contact) 
     })
-    res.send({message:"this contact is update"})
+    //res.send({message:"this contact is update"})
 });
 
-router.get('/all',async(req,res)=>{
+router.get('/',async(req,res)=>{
     const AllContact = await Contact.find({});
     res.send(AllContact);
 });
 
 router.delete('/delete/:id',async(req,res)=>{
-    const deleteContact = await Contact.findByIdAndDelete(req.params.id);
+    const deleteContact = await Contact.findByIdAndDelete({_id:req.params.id});
     try {
         res.send({message:"this contact is remove"})
     } catch (error) {

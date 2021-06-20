@@ -8,7 +8,7 @@ mongoose.connect("mongodb://localhost:27017/ContactApp",{useNewUrlParser:true,us
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/',contactRouter);
+app.use('/api/contact',contactRouter);
 
 
 app.listen(5000,()=>{
