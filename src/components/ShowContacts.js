@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom';
 import { contactList } from '../redux/actions/contactActions';
 
 const ShowContacts = () => {
     const Contacts = useSelector(state => state.Contacts);
     const {loading , contactInfo , error} = Contacts;
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(()=>{
         dispatch(contactList());
-    },[dispatch])
+    },[dispatch]);
+
+    const handleClick = (e)=>{
+        e.preventDefault();
+        history.push('/add');
+    }
     return (
       <>
       {
@@ -20,7 +27,7 @@ const ShowContacts = () => {
             <div className="container">
             
                 <div className="d-flex p-5 justify-content-end">
-                    <button className="btn btn-outline-secondary  ">Add Contact</button>
+                    <button className="btn btn-outline-secondary" onClick={handleClick}>Add Contact</button>
                 </div>
                 <div className="d-flex justify-content-center align-items-center">
                     <table className="table table-bordered table-sm">
