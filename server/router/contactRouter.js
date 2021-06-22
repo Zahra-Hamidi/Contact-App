@@ -18,9 +18,8 @@ router.post('/edit/:id',async(req,res)=>{
     let editContact =await Contact.updateOne({_id:req.params.id},{
         name:req.body.name,
         email:req.body.email
-    }).then((contact)=>{
-            res.send(contact) 
-    })
+    });
+    res.send(editContact);
     //res.send({message:"this contact is update"})
 });
 
@@ -28,6 +27,11 @@ router.get('/',async(req,res)=>{
     const AllContact = await Contact.find({});
     res.send(AllContact);
 });
+
+router.get('/:id',async(req,res)=>{
+    const contact = await Contact.findById({_id:req.params.id});
+    res.send(contact);
+})
 
 router.delete('/delete/:id',async(req,res)=>{
     const deleteContact = await Contact.findByIdAndDelete({_id:req.params.id});

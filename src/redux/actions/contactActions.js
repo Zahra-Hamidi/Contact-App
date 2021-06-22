@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_CONTACT_FAIL, ADD_CONTACT_REQUEST, ADD_CONTACT_SUCCESS, CONTACT_LIST_FAIL, CONTACT_LIST_REQUEST, CONTACT_LIST_SUCCESS } from "../types"
+import { ADD_CONTACT_FAIL, ADD_CONTACT_REQUEST, ADD_CONTACT_SUCCESS, CONTACT_LIST_FAIL, CONTACT_LIST_REQUEST, CONTACT_LIST_SUCCESS, DETAILS_CONTACT_FAIL, DETAILS_CONTACT_REQUEST, DETAILS_CONTACT_SUCCESS, UPDATE_CONTACT_FAIL, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_SUCCESS } from "../types"
 
 export const contactList = () => async(dispatch)=>{
     dispatch({type:CONTACT_LIST_REQUEST});
@@ -12,24 +12,35 @@ export const contactList = () => async(dispatch)=>{
 }
 
 export const editContact = (id,name,email) => async(dispatch)=>{
-    
+    dispatch({type:UPDATE_CONTACT_REQUEST,payload:{name,email}})
     try {
-        const {data} = axios.post(`/api/contact/edit/${id}`,{
+        const {data} =await axios.post(`/api/contact/edit/${id}`,{
             name,
             email
         });
+        dispatch({type:UPDATE_CONTACT_SUCCESS,payload:data})
         
     } catch (error) {
-        
+        dispatch({type:UPDATE_CONTACT_FAIL,payload:error.message})
     }
 }
 
 export const addContact = (name,email) => async(dispatch)=>{
     dispatch({type:ADD_CONTACT_REQUEST,payload:{name,email}});
     try {
-        const {data} = axios.post('/api/contact/add',{name,email});
+        const {data} = await axios.post('/api/contact/add',{name,email});
         dispatch({type:ADD_CONTACT_SUCCESS,payload:data})
     } catch (error) {
         dispatch({type:ADD_CONTACT_FAIL,payload:error.message})
+    }
+}
+
+export const detailsContacts = (contactId) => async(dispatch)=>{
+    dispatch({type:DETAILS_CONTACT_REQUEST,payload:contactId});
+    try {
+        const {data} =await axios.get(`/api/contact/${contactId}`);
+        dispatch({type:DETAILS_CONTACT_SUCCESS,payload:data});
+    } catch (error) {
+        dispatch({type:DETAILS_CONTACT_FAIL,payload:error.message});
     }
 }
