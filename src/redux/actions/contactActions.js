@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_CONTACT_FAIL, ADD_CONTACT_REQUEST, ADD_CONTACT_SUCCESS, CONTACT_LIST_FAIL, CONTACT_LIST_REQUEST, CONTACT_LIST_SUCCESS, DETAILS_CONTACT_FAIL, DETAILS_CONTACT_REQUEST, DETAILS_CONTACT_SUCCESS, UPDATE_CONTACT_FAIL, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_SUCCESS } from "../types"
+import { ADD_CONTACT_FAIL, ADD_CONTACT_REQUEST, ADD_CONTACT_SUCCESS, CONTACT_LIST_FAIL, CONTACT_LIST_REQUEST, CONTACT_LIST_SUCCESS, DETAILS_CONTACT_FAIL, DETAILS_CONTACT_REQUEST, DETAILS_CONTACT_SUCCESS, REMOVE_CONTACT_FAIL, REMOVE_CONTACT_SUCCESS, UPDATE_CONTACT_FAIL, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_SUCCESS } from "../types"
 
 export const contactList = () => async(dispatch)=>{
     dispatch({type:CONTACT_LIST_REQUEST});
@@ -42,5 +42,15 @@ export const detailsContacts = (contactId) => async(dispatch)=>{
         dispatch({type:DETAILS_CONTACT_SUCCESS,payload:data});
     } catch (error) {
         dispatch({type:DETAILS_CONTACT_FAIL,payload:error.message});
+    }
+}
+
+export const deleteContact = (Id) => async(dispatch)=>{
+    
+    try {
+        const {data} = axios.delete(`/api/contact/delete/${Id}`);
+        dispatch({type:REMOVE_CONTACT_SUCCESS,payload:data})
+    } catch (error) {
+        dispatch({type:REMOVE_CONTACT_FAIL,payload:error.message})
     }
 }

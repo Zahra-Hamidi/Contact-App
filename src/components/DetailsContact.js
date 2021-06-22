@@ -34,7 +34,7 @@ const DetailsContact = (props) => {
   
 
     const submitHandler = (e)=>{
-        // e.preventDefault();
+         e.preventDefault();
         dispatch(editContact(id,name,email));
         history.push('/');
     }
