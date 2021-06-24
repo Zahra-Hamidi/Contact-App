@@ -6,7 +6,7 @@ import { contactList, deleteContact } from '../redux/actions/contactActions';
 
 const ShowContacts = (props) => {
     const Contacts = useSelector(state => state.Contacts);
-    const {loading , contactInfo , error} = Contacts;
+    const {contactInfo} = Contacts;
     const dispatch = useDispatch();
     const history = useHistory();
     const contactId = props.match.params.id;
@@ -20,16 +20,12 @@ const ShowContacts = (props) => {
     const handleClick = (e)=>{
         e.preventDefault();
         history.push('/add');
+
     }
-    const removeHanler = (id)=>{
-        dispatch(deleteContact(id))
-    }
+    
+   
     return (
       <>
-      {
-          loading ? <div>Loading...</div> :
-          error ? <div>{error}</div>
-          :
       
             <div className="container">
             
@@ -57,7 +53,7 @@ const ShowContacts = (props) => {
                                             <button type="button" className="btn btn-primary btn-sm mx-2" onClick={()=>{
                                                 history.push(`/update/${contact._id}`)
                                             }}>Edit</button>
-                                            <button type="button" className="btn btn-danger btn-sm" onClick={(id)=>removeHanler(contact._id)}>Remove</button>
+                                            <button type="button" className="btn btn-danger btn-sm" onClick={()=>dispatch(deleteContact(contact._id))}>Remove</button>
                                         </td>
                                     </tr>
                                 ))
@@ -67,7 +63,7 @@ const ShowContacts = (props) => {
                 </div>
               
             </div>
-        }
+        
       </>
     )
 }

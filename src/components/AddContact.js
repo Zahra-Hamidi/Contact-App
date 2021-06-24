@@ -12,8 +12,8 @@ const AddContact = () => {
     const [email,setEmail] = useState('');
     const history = useHistory();
     const dispatch = useDispatch();
-    const Contact = useSelector(state => state.addContact);
-    const {loading,contact,error} = Contact;
+    // const Contact = useSelector(state => state.addContact);
+    // const {loading,contact,error} = Contact;
 
     // const addClickHandler = (e)=>{
     //     e.preventDefault();
@@ -29,8 +29,8 @@ const AddContact = () => {
     return (
         <div className="w-50 mx-auto  shadow border-1 my-5 p-2">
             <form className="was-validated m-2" onSubmit={submitHandler}>
-                {loading && <div>Loading...</div>}
-                {error && <div>{error}</div>}
+                {/* {loading && <div>Loading...</div>}
+                {error && <div>{error}</div>} */}
                 <div className="form-group my-2">
                     <lable htmlFor="name">Name:</lable>
                     <input type="text" className="form-control" id="name" name="name" placeholder="Enter name" required

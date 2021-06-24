@@ -20,7 +20,6 @@ function App() {
           <Route exact path="/" component={ShowContacts}></Route>
           <Route path="/add" component={AddContact}></Route>
           <Route path="/update/:id" component={DetailsContact}></Route>
-          <Route path="/remove/:id">I am Home Page</Route>
         </main>
     </Router>
     </>
